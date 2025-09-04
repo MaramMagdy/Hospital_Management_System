@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+
 namespace Hospital_Management_System
 {
     public class Program
@@ -6,8 +8,18 @@ namespace Hospital_Management_System
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
             builder.Services.AddControllersWithViews();
+
+            string connectionstring = builder.Configuration.GetConnectionString("CS");
+
+
+            builder.Services.AddDbContext<AppDbContext>(OptionsBuilder => {
+                OptionsBuilder.UseSqlServer(connectionstring);
+
+            });
+
+
+
 
             var app = builder.Build();
 
